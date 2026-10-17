@@ -1,7 +1,14 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/glass_root" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:padding="16dp" android:background="@drawable/glass_bg">
-<TextView android:id="@+id/location" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="مواقيت الصلاة" android:textColor="#D7E8F0" android:textSize="12sp" android:gravity="end"/>
-<TextView android:id="@+id/next_label" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="الصلاة القادمة" android:textColor="#FFFFFF" android:textSize="14sp" android:gravity="end" android:layout_marginTop="8dp"/>
-<TextView android:id="@+id/next_name" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="افتح التطبيق لتحديد موقعك" android:textColor="#FFFFFF" android:textSize="23sp" android:textStyle="bold" android:gravity="end"/>
-<TextView android:id="@+id/countdown" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="سيظهر الوقت المتبقي هنا" android:textColor="#B8F4F0" android:textSize="15sp" android:gravity="end" android:layout_marginTop="3dp"/>
-<TextView android:id="@+id/times" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="الفجر • الظهر • العصر • المغرب • العشاء" android:textColor="#D7E8F0" android:textSize="11sp" android:gravity="end" android:layout_marginTop="10dp"/>
-</LinearLayout>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <ImageView android:id="@+id/wallpaper_blur" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:scaleType="centerCrop" android:contentDescription="@null"/>
+    <LinearLayout android:id="@+id/glass_root" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:orientation="vertical" android:padding="16dp"
+        android:background="@drawable/glass_bg">
+        <TextView android:id="@+id/location" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="مواقيت الصلاة" android:textColor="#F2FFFFFF" android:textSize="12sp" android:gravity="end"/>
+        <TextView android:id="@+id/next_label" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="الصلاة القادمة" android:textColor="#FFFFFF" android:textSize="14sp" android:gravity="end" android:layout_marginTop="8dp"/>
+        <TextView android:id="@+id/next_name" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="افتح التطبيق لتحديد موقعك" android:textColor="#FFFFFF" android:textSize="23sp" android:textStyle="bold" android:gravity="end"/>
+        <TextView android:id="@+id/countdown" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="سيظهر الوقت المتبقي هنا" android:textColor="#B8F4F0" android:textSize="15sp" android:gravity="end" android:layout_marginTop="3dp"/>
+        <TextView android:id="@+id/times" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="الفجر • الظهر • العصر • المغرب • العشاء" android:textColor="#F2FFFFFF" android:textSize="11sp" android:gravity="end" android:layout_marginTop="10dp"/>
+    </LinearLayout>
+</FrameLayout>
