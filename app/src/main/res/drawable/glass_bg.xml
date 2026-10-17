@@ -1,1 +1,4 @@
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle"><corners android:radius="28dp"/><gradient android:angle="135" android:startColor="#D92B4658" android:centerColor="#B91C3042" android:endColor="#A90E1A29"/><stroke android:width="1dp" android:color="#75E5F5F3"/></shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item><shape android:shape="rectangle"><corners android:radius="24dp"/><solid android:color="#B81A2938"/><stroke android:width="1dp" android:color="#70FFFFFF"/></shape></item>
+    <item android:top="1dp" android:left="1dp" android:right="1dp"><shape android:shape="rectangle"><corners android:radius="23dp"/><gradient android:angle="135" android:startColor="#55FFFFFF" android:centerColor="#16FFFFFF" android:endColor="#32A9D8E8" android:type="linear"/></shape></item>
+</layer-list>
