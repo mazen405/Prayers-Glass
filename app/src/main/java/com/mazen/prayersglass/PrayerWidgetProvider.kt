@@ -1,7 +1,6 @@
 package com.mazen.prayersglass
 
 import android.app.PendingIntent
-import android.app.WallpaperManager
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
@@ -45,10 +44,12 @@ class PrayerWidgetProvider : AppWidgetProvider() {
         val views = RemoteViews(context.packageName, R.layout.prayer_widget)
         views.setTextViewText(R.id.location, location)
 
-        // Use the system wallpaper's palette to tint the glass while keeping text readable.
-        val wallpaperColor = try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                WallpaperManager.getInstance(context).getWallpaperColors(WallpaperManager.FLAG_SYSTEM)
+        // Prefer the color sampled from the wallpaper image selected during widget setup.
+        // Fall back to Android's wallpaper palette when no image has been selected.
+        val wallpaperColor = prefs.getInt("wallpaper_color", 0).takeIf { it != 0 } ?: try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+                android.app.WallpaperManager.getInstance(context)
+                    .getWallpaperColors(android.app.WallpaperManager.FLAG_SYSTEM)
                     ?.primaryColor?.toArgb() ?: Color.rgb(50, 78, 96)
             } else Color.rgb(50, 78, 96)
         } catch (_: Exception) { Color.rgb(50, 78, 96) }
