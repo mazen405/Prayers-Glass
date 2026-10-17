@@ -13,6 +13,15 @@ import android.widget.RemoteViews
 import java.util.Calendar
 
 class PrayerWidgetProvider : AppWidgetProvider() {
+    override fun onReceive(context: Context, intent: Intent) {
+        super.onReceive(context, intent)
+        if (intent.action == Intent.ACTION_WALLPAPER_CHANGED) {
+            val manager = AppWidgetManager.getInstance(context)
+            val ids = manager.getAppWidgetIds(android.content.ComponentName(context, PrayerWidgetProvider::class.java))
+            if (ids.isNotEmpty()) onUpdate(context, manager, ids)
+        }
+    }
+
     override fun onUpdate(context: Context, manager: AppWidgetManager, ids: IntArray) {
         val prefs = context.getSharedPreferences("prayers", Context.MODE_PRIVATE)
         val names = (prefs.getString("names", "الفجر|الظهر|العصر|المغرب|العشاء") ?: "").split("|")
