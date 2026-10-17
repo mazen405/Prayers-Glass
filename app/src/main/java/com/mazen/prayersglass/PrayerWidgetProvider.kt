@@ -74,13 +74,17 @@ class PrayerWidgetProvider : AppWidgetProvider() {
         for (id in ids) manager.updateAppWidget(id, views)
     }
 
-    private fun makeBlurredBackdrop(context: Context, uri: Uri): Bitmap? = try {
-        val opts = BitmapFactory.Options().apply { inSampleSize = 8 }
-        val source = context.contentResolver.openInputStream(uri).use { BitmapFactory.decodeStream(it, null, opts) } ?: return null
-        val small = Bitmap.createScaledBitmap(source, max(1, source.width / 3), max(1, source.height / 3), true)
-        if (source !== small) source.recycle()
-        boxBlur(small, 5).also { if (it !== small) small.recycle() }
-    } catch (_: Exception) { null }
+    private fun makeBlurredBackdrop(context: Context, uri: Uri): Bitmap? {
+        return try {
+            val opts = BitmapFactory.Options().apply { inSampleSize = 8 }
+            val source = context.contentResolver.openInputStream(uri).use {
+                BitmapFactory.decodeStream(it, null, opts)
+            } ?: return null
+            val small = Bitmap.createScaledBitmap(source, max(1, source.width / 3), max(1, source.height / 3), true)
+            if (source !== small) source.recycle()
+            boxBlur(small, 5).also { if (it !== small) small.recycle() }
+        } catch (_: Exception) { null }
+    }
 
     private fun boxBlur(input: Bitmap, radius: Int): Bitmap {
         val w = input.width; val h = input.height
