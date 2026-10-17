@@ -1,7 +1,7 @@
 package com.mazen.prayersglass
 
-import android.app.AppWidgetManager
-import android.app.AppWidgetProvider
+import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -48,8 +48,6 @@ class PrayerWidgetProvider : AppWidgetProvider() {
         }
         val views = RemoteViews(context.packageName, R.layout.prayer_widget)
         views.setTextViewText(R.id.location, location)
-
-        // A real wallpaper image layer behind translucent glass gives the widget visible depth.
         val wallpaperUri = prefs.getString("wallpaper_uri", null)
         val backdrop = wallpaperUri?.let { makeBlurredBackdrop(context, Uri.parse(it)) }
         if (backdrop != null) {
@@ -58,7 +56,6 @@ class PrayerWidgetProvider : AppWidgetProvider() {
         } else {
             views.setImageViewBitmap(R.id.wallpaper_blur, makeFallbackBackdrop())
         }
-
         if (nextIndex >= 0) {
             val left = (nextMillis - now.timeInMillis) / 60000
             views.setTextViewText(R.id.next_label, "الصلاة القادمة")
@@ -69,8 +66,8 @@ class PrayerWidgetProvider : AppWidgetProvider() {
             views.setTextViewText(R.id.next_name, "افتح التطبيق لتحديث المواقيت")
             views.setTextViewText(R.id.countdown, "المواقيت غير متاحة")
         }
-        val intent = PendingIntentCompat.activity(context)
-        views.setOnClickPendingIntent(R.id.next_name, intent)
+        val launchIntent = PendingIntentCompat.activity(context)
+        views.setOnClickPendingIntent(R.id.next_name, launchIntent)
         for (id in ids) manager.updateAppWidget(id, views)
     }
 
