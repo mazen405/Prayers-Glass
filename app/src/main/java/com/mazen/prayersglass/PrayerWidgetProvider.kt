@@ -21,16 +21,14 @@ import kotlin.math.max
 class PrayerWidgetProvider : AppWidgetProvider() {
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
-        if (intent.action == Intent.ACTION_WALLPAPER_CHANGED) {
-            refreshAll(context)
-        }
+        if (intent.action == Intent.ACTION_WALLPAPER_CHANGED) refreshAll(context)
     }
 
     override fun onUpdate(context: Context, manager: AppWidgetManager, ids: IntArray) {
         val prefs = context.getSharedPreferences("prayers", Context.MODE_PRIVATE)
         val names = (prefs.getString("names", "الفجر|الظهر|العصر|المغرب|العشاء") ?: "").split("|")
         val times = (prefs.getString("times", "") ?: "").split("|")
-        val location = prefs.getString("location", "افتح التطبيق لتحديد موقعك") ?: "افتح التطبيق لتحديد موقعك"
+        val location = prefs.getString("location", "حدّد موقعك من التطبيق") ?: "حدّد موقعك من التطبيق"
         val now = Calendar.getInstance()
         var nextIndex = -1
         var nextMillis = Long.MAX_VALUE
@@ -55,7 +53,6 @@ class PrayerWidgetProvider : AppWidgetProvider() {
 
         val views = RemoteViews(context.packageName, R.layout.prayer_widget)
         views.setTextViewText(R.id.location, location)
-
         val wallpaperUri = prefs.getString("wallpaper_uri", null)
         val backdrop = wallpaperUri?.let { makeBlurredBackdrop(context, Uri.parse(it)) }
             ?: makeSystemWallpaperBackdrop(context)
@@ -63,19 +60,17 @@ class PrayerWidgetProvider : AppWidgetProvider() {
 
         if (nextIndex >= 0) {
             val left = ((nextMillis - now.timeInMillis).coerceAtLeast(0L) / 60000L)
+            val countdown = when {
+                left >= 60 -> "${left / 60} س ${left % 60} د"
+                else -> "${left} دقيقة"
+            }
             views.setTextViewText(R.id.next_label, "الصلاة القادمة")
             views.setTextViewText(R.id.next_name, names[nextIndex])
-            views.setTextViewText(R.id.countdown, "متبقي ${left / 60} ساعة و ${left % 60} دقيقة")
-            views.setTextViewText(
-                R.id.times,
-                names.indices.filter { it < times.size }
-                    .joinToString("   •   ") { "${names[it]} ${times[it]}" }
-            )
+            views.setTextViewText(R.id.countdown, countdown)
         } else {
             views.setTextViewText(R.id.next_label, "الصلاة القادمة")
             views.setTextViewText(R.id.next_name, "افتح التطبيق")
-            views.setTextViewText(R.id.countdown, "لتحديد الموقع وتحديث المواقيت")
-            views.setTextViewText(R.id.times, "الفجر  •  الظهر  •  العصر\nالمغرب  •  العشاء")
+            views.setTextViewText(R.id.countdown, "حدّد موقعك")
         }
 
         val launchIntent = PendingIntentCompat.activity(context)
