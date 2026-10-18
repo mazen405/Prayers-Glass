@@ -1,6 +1,6 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:minWidth="200dp"
-    android:minHeight="140dp"
+    android:minWidth="250dp"
+    android:minHeight="72dp"
     android:updatePeriodMillis="1800000"
     android:initialLayout="@layout/prayer_widget"
     android:configure="com.mazen.prayersglass.WidgetConfigActivity"
