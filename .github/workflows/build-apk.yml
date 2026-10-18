@@ -10,6 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Extract clean project
+        run: |
+          test -f PrayersGlass.zip
+          mkdir -p /tmp/prayersglass-source
+          unzip -q PrayersGlass.zip -d /tmp/prayersglass-source
+          test -f /tmp/prayersglass-source/PrayersGlass/gradlew
+          rsync -a --delete --exclude='.git' /tmp/prayersglass-source/PrayersGlass/ ./
+          chmod +x ./gradlew
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -17,7 +25,10 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
-      - run: gradle assembleDebug
+      - name: Run unit tests
+        run: gradle test
+      - name: Build debug APK
+        run: gradle assembleDebug
       - uses: actions/upload-artifact@v4
         with:
           name: Prayers-Glass-debug-apk
