@@ -58,7 +58,7 @@
 
         <ImageView
             android:layout_width="1dp"
-            android:layout_height="58%"
+            android:layout_height="40dp"
             android:background="#55FFFFFF"
             android:contentDescription="@null" />
 
